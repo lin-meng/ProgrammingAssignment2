@@ -14,23 +14,23 @@ makeCacheMatrix <- function(x = matrix()) {
         ## Initialize the variable of mkMtx
 		mkMtx <- NULL 
 		
-		## a function to reinitialize and update mkMtx using special <<- 
+        ## a function to reinitialize and update mkMtx using special <<- 
         set <- function(y) {
                 x <<- y
                 mkMtx <<- NULL
         }
        
-		## a function to get a matrix input
-		get <- function() x
+	## a function to get a matrix input
+	get <- function() x
 		
-		## a function to calcluate the inverse, update mkMtx using special <<- 
+	## a function to calcluate the inverse, update mkMtx using special <<- 
         setInverse <- function(mkMtx) mkMtx <<- solve(x)  # Use R built-in solve
         
-		## a function to get the inverse of a matrix from mkMtx
-		getInverse <- function() mkMtx
+	## a function to get the inverse of a matrix from mkMtx
+	getInverse <- function() mkMtx
         
-		## create a list of all 4 functions, and return them as the output
-		list(set = set, get = get,
+	## create a list of all 4 functions, and return them as the output
+	list(set = set, get = get,
              setInverse = setInverse,
              getInverse = getInverse)
 }
@@ -42,16 +42,16 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
         ## Get the inverse of the matrix and update mkMtx using 'getInverse'
-		mkMtx <- x$getInverse() 
+	mkMtx <- x$getInverse() 
 
-		## If mkMtx is not NULL, then it will be returned, no more calculation.
-		 if(!is.null(mkMtx)) {
+	## If mkMtx is not NULL, then it will be returned, no more calculation.
+	if(!is.null(mkMtx)) {
                 message("getting cached matrix")
                 return(mkMtx)
         }
 		
-		## If mkMtx is NULL, then get the input matrix, solve it, 
-		## and assign the inverse to mkMtx
+	## If mkMtx is NULL, then get the input matrix, solve it, 
+	## and assign the inverse to mkMtx
         data <- x$get()       # use 'get' already defined to get the matrix
         mkMtx <- solve(data, ...)    # Use R built-in solve and update mkMtx
         x$setInverse(mkMtx)       # Update the input matrix with 'setInverse'
