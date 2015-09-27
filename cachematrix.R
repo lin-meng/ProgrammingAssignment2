@@ -20,17 +20,17 @@ makeCacheMatrix <- function(x = matrix()) {
                 invMtx <<- NULL
     }
        
-	## a function to get the input matrix
-	get <- function() x
+    ## a function to get the input matrix
+    get <- function() x
 		
-	## a function to calcluate the matrix inverse and update invMtx using special <<- 
+    ## a function to calcluate the matrix inverse and update invMtx using special <<- 
     setInverse <- function(invMtx) invMtx <<- solve(x)  # use R built-in solve
         
-	## a function to get the matrix inverse from invMtx
-	getInverse <- function() invMtx
+    ## a function to get the matrix inverse from invMtx
+    getInverse <- function() invMtx
         
-	## create a list of all 4 functions, and return them as the output
-	list(set = set, get = get,
+    ## create a list of all 4 functions, and return them as the output
+    list(set = set, get = get,
              setInverse = setInverse,
              getInverse = getInverse)
 }
@@ -42,20 +42,18 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
     ## Get the matrix inverse and update invMtx using 'getInverse'
-	invMtx <- x$getInverse() 
+    invMtx <- x$getInverse() 
 
-	## If invMtx is not NULL, then it will be returned, no more calculation.
-	if(!is.null(invMtx)) {
+    ## If invMtx is not NULL, then it will be returned, no more calculation.
+    if(!is.null(invMtx)) {
                 message("getting cached matrix")
                 return(invMtx)
     }
 		
-	## If invMtx is NULL, then get the input matrix, solve it, 
-	## and assign the matrix inverse to invMtx
-        data <- x$get()       # use 'get' to get the input matrix
-        invMtx <- solve(data, ...)    # use R built-in solve and update invMtx
-        x$setInverse(invMtx)       # generate the matrix inverse with 'setInverse'
-        invMtx            # return the updated invMtx
+    ## If invMtx is NULL, then get the input matrix, solve it, 
+    ## and assign the matrix inverse to invMtx
+    data <- x$get()       # use 'get' to get the input matrix
+    invMtx <- solve(data, ...)    # use R built-in solve and update invMtx
+    x$setInverse(invMtx)       # generate the matrix inverse with 'setInverse'
+    invMtx            # return the updated invMtx
 }
-
-
